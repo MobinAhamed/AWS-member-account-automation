@@ -19,7 +19,7 @@ A CloudFormation template that provisions **two AWS member accounts** inside an 
 3. `DependsOn` makes the second account wait for the first resource.
 4. CloudFormation returns the account IDs in stack outputs.
 
-See [docs/architecture.md](docs/architecture.md).
+See [deployment-guide.md](deployment-guide.md).
 
 ## Prerequisites
 
@@ -46,7 +46,7 @@ The original step-by-step guide supplied with this project uses the CloudFormati
 
 **For this repository's parameterized template:** the console asks for `Account1Name`, `Account1Email`, `Account2Name`, and `Account2Email` on the **Specify stack details** page. Enter two valid, unique email addresses. Do not hardcode real email addresses into the public template.
 
-See [docs/deployment-guide.md](docs/deployment-guide.md) for detailed console and CLI steps.
+See [architecture.md](architecture.md).
 
 ## Deploy using the AWS CLI
 
