@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Creates two AWS member accounts in an existing AWS Organization.
+  Account creation is sequential.
+
+Parameters:
+  Account1Name:
+    Type: String
+    Description: Name of the first AWS member account
+    MinLength: 1
+    MaxLength: 50
+  Account1Email:
+    Type: String
+    Description: Unique email address for the first AWS account
+    AllowedPattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+    ConstraintDescription: Enter a valid email address.
+  Account2Name:
+    Type: String
+    Description: Name of the second AWS member account
+    MinLength: 1
+    MaxLength: 50
+  Account2Email:
+    Type: String
+    Description: Unique email address for the second AWS account
+    AllowedPattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+    ConstraintDescription: Enter a valid email address.
+
+Resources:
+  ChildAccount1:
+    Type: AWS::Organizations::Account
+    DeletionPolicy: Retain
+    Properties:
+      AccountName: !Ref Account1Name
+      Email: !Ref Account1Email
+
+  ChildAccount2:
+    Type: AWS::Organizations::Account
+    DependsOn: ChildAccount1
+    DeletionPolicy: Retain
+    Properties:
+      AccountName: !Ref Account2Name
+      Email: !Ref Account2Email
+
+Outputs:
+  Account1ID:
+    Description: AWS account ID of the first member account
+    Value: !Ref ChildAccount1
+  Account2ID:
+    Description: AWS account ID of the second member account
+    Value: !Ref ChildAccount2
